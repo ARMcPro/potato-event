@@ -4,7 +4,7 @@ function sortPlayerData(myDict){
   .sort((a, b) => b[2] - a[2] || a[0] - b[0])
   .map(([key, firstValue, lengthMinusOne], index) => [index + 1, firstValue, lengthMinusOne]);
   var data = sortedArray;
-  data.unshift(['#','Name','Diamonds']);
+  data.unshift(['#','Name','Potatoes']);
   const table = document.createElement('table');
   table.setAttribute("id", "content-table");
   if (data.length === 1) {
@@ -44,7 +44,7 @@ function getPlayerData(playerData, PDATA){
   .sort((a, b) => a[2] - b[2] || a[0] - b[0])
   .map(([_, firstValue, lengthMinusOne], index) => [index + 1, firstValue, lengthMinusOne]);
   var data = sortedArray;
-  data.unshift(['#','Plot ID','Diamonds']);
+  data.unshift(['#','Plot ID','Potatoes']);
   const table = document.createElement('table');
   table.setAttribute("id", "content-table");
   if (data.length === 1) {
