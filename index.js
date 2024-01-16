@@ -109,6 +109,5 @@ app.get('/sync', async (req, res) => {
 
 app.listen(8080, () => {
   console.log('Server started at ' + new Date().toUTCString());
-  fs.writeFileSync("./data/playerdata.json", '"99cee156-b88c-4a06-825f-06dd943aa153":["ARMcPro","dfsmash 5"]')
 });
 
