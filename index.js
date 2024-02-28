@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 require("dotenv").config();
 run = ""
@@ -48,24 +49,24 @@ app.post('/post', express.json(), (req,res) => {
       fs.readFile("./data/plotdata.json", async function (err, data) {
         var json = JSON.parse(data);
         if (typeof json[plotID] !== 'undefined' && typeof req.body['point'] === 'string' && typeof req.body['uuid'] === 'string' && req.body['key'] === process.env[P + plotID] && !resrictedPlayers.includes(req.body['uuid']) && typeof process.env[P + plotID] === 'string') {
-          console.log("1");
-          if (json[plotID].includes(req.body['point'].toLowerCase())) {
+          if (json[plotID].includes(req.body['point'])) {
             fs.readFile("./data/playerdata.json", async function (perr, pdata) {
               var pjson = JSON.parse(pdata);
               if (typeof pjson[req.body['uuid']] === 'undefined')             {
                 console.log("new");
-                var pname = await fetchName(req.body['uuid'])["name"];
-                if (typeof pname !== 'undefined') {
+                var pname = await fetchName(req.body['uuid']);
+		pname = pname["name"];
+		if (typeof pname !== 'undefined') {
                   var keyName = req.body['uuid']
-                  pjson[keyName] = [pname, req.body['point'].toLowerCase()];
+                  pjson[keyName] = [pname, req.body['point']];
                   fs.writeFileSync("./data/playerdata.json", JSON.stringify(pjson));
                 };
               }
-              else if (!pjson[req.body['uuid']].includes(req.body['point'].toLowerCase()))        {
+              else if (!pjson[req.body['uuid']].includes(req.body['point']))        {
                 console.log("old");
                 var keyName = req.body['uuid'];
                 var pname = await fetchName(req.body[keyName])["name"];
-                pjson[keyName].push(req.body['point'].toLowerCase());
+                pjson[keyName].push(req.body['point']);
                 fs.writeFileSync("./data/playerdata.json", JSON.stringify(pjson));
               };
             });
@@ -110,4 +111,3 @@ app.get('/sync', async (req, res) => {
 app.listen(8080, () => {
   console.log('Server started at ' + new Date().toUTCString());
 });
-
