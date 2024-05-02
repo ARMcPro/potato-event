@@ -1,4 +1,3 @@
-require('dotenv').config();
 const express = require('express');
 require("dotenv").config();
 run = ""
@@ -24,6 +23,10 @@ app.get('/hints', (req, res) => {
   res.sendFile(__dirname + "/hints.html");
 });
 
+app.get('/faq', (req, res) => {
+  res.sendFile(__dirname + "/faq.html");
+});
+
 /*
 function fetchName(uuid) {
     var xmlHttp = new XMLHttpRequest();
@@ -43,7 +46,7 @@ app.post('/post', express.json(), (req,res) => {
   try {
     const P = 'P';
     let timestamp = new Date().getTime() / 1000;
-    if (timestamp >= 1686988800 && timestamp < 9987161601) {
+    if (timestamp >= 1717164000 && timestamp < 9987161601) {
       let plotID = req.headers['user-agent'].split(' (')[1].split(', ')[0];
       console.log(plotID);
       fs.readFile("./data/plotdata.json", async function (err, data) {

@@ -22,7 +22,18 @@ function sortPlayerData(myDict){
     const row = table.insertRow();
     data[i].forEach((cell, index) => {
       const cellElement = row.insertCell();
-      cellElement.textContent = cell;
+      if (index === 1) {
+        var span = document.createElement("span");
+        span.textContent = cell;
+        span.classList.add("clickable");
+        span.addEventListener("click", function() {
+          searchbox.value = cell;
+          processInput();
+        });
+        cellElement.appendChild(span);
+      } else {
+        cellElement.textContent = cell;
+      }
     });
   }
   
@@ -33,18 +44,19 @@ function sortPlayerData(myDict){
 function getPlayerData(playerData, PDATA){
   var result = {};
   for (const key in PDATA) {
-    const count = PDATA[key].filter(item => playerData.slice(1).includes(item)).length;
-    if (count > 0) {
-      result[key] = count;
+    const items = PDATA[key].filter(item => playerData.slice(1).includes(item));
+    if (items.length > 0) {
+      let newItems = items.map(i => idsjson[key][idsjson[key].indexOf(i) + Math.floor(idsjson[key].length/2)]);
+      result[`${plotnamesjson[key]} (${key})`] = '🞄' + newItems.join('<br>🞄');
     }
   }
   console.log(result)
   var sortedArray = Object.entries(result)
-  .map(([key, value]) => [key, key, value])
-  .sort((a, b) => a[2] - b[2] || a[0] - b[0])
-  .map(([_, firstValue, lengthMinusOne], index) => [index + 1, firstValue, lengthMinusOne]);
+    .map(([key, value]) => [key, key, value])
+    .sort((a, b) => a[2].length - b[2].length)
+    .map(([_, firstValue, lengthMinusOne], index) => [index + 1, firstValue, lengthMinusOne]);
   var data = sortedArray;
-  data.unshift(['#','Plot ID','Potatoes']);
+  data.unshift(['#','Plot','Potatoes']);
   const table = document.createElement('table');
   table.setAttribute("id", "content-table");
   if (data.length === 1) {
@@ -62,7 +74,7 @@ function getPlayerData(playerData, PDATA){
     const row = table.insertRow();
     data[i].forEach((cell, index) => {
       const cellElement = row.insertCell();
-      cellElement.textContent = cell;
+      cellElement.innerHTML = cell;
     });
   }
   
@@ -89,6 +101,14 @@ function storePlotData(plotData){
   plotsjson = plotData;
 };
 
+function storePlotNameData(nameData){
+  plotnamesjson = nameData;
+};
+
+function storeIdData(idData){
+  idsjson = idData;
+};
+
 
 fetch('data/playerdata.json')
   .then(response => response.text())
@@ -102,6 +122,20 @@ fetch('data/plotdata.json')
   .then(response => response.text())
   .then(data => {
     storePlotData(JSON.parse(data));;
+  })
+  .catch(error => console.error(error));
+
+fetch('data/id_name.json')
+  .then(response => response.text())
+  .then(data => {
+    storePlotNameData(JSON.parse(data));;
+  })
+  .catch(error => console.error(error));
+
+fetch('data/id_converter.json')
+  .then(response => response.text())
+  .then(data => {
+    storeIdData(JSON.parse(data));;
   })
   .catch(error => console.error(error));
 
@@ -141,13 +175,13 @@ searchbox.addEventListener("keyup", function(event) {
   }
 });
 
-var submitSearch = document.getElementById("submit-search");
+const submitSearch = document.getElementById("submit-search");
 submitSearch.addEventListener("click", function() {
   submitSearch.classList.add("clicked");
   processInput();
 });
 
-var clearSearch = document.getElementById("clear-search");
+const clearSearch = document.getElementById("clear-search");
 clearSearch.addEventListener("click", function() {
   clearSearch.classList.add("clicked");
   searchbox.value = "";
