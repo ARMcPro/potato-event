@@ -29,7 +29,7 @@ Why is the event called like that?
 
 
 Wait a second, weren't the points called Diamonds?
--Yes, in the first event they were killed like so because it was an event hosted on a server called DiamondFire. Although, after many complaints, we decided to change their name to Potato in order to avoid confusion.
+-Yes, in the first event they were called like so because it was an event hosted on a server called DiamondFire. Although, after many complaints, we decided to change their name to Potato in order to avoid confusion.
 
 
 I found a bug on one of the plots involved in the event, what can I do?
