@@ -57,7 +57,7 @@ app.post('/post', express.json(), (req,res) => {
             if (json[plotName].includes(req.body['point'])) {
               fs.readFile(__dirname + "/data/playerdata.json", async function (perr, pdata) {
                 var pjson = JSON.parse(pdata);
-                if (typeof pjson[req.body['uuid']] === 'undefined')             {
+                if (typeof pjson[req.body['uuid']] === 'undefined')  {
                   console.log("new");
                   var pname = await fetchName(req.body['uuid']);
                   pname = pname["name"];
@@ -67,7 +67,7 @@ app.post('/post', express.json(), (req,res) => {
                     fs.writeFileSync(__dirname + "/data/playerdata.json", JSON.stringify(pjson));
                   };
                 }
-                else if (!pjson[req.body['uuid']].includes(req.body['point']))        {
+                else if (!pjson[req.body['uuid']].includes(req.body['point'])) {
                   console.log("old");
                   var keyName = req.body['uuid'];
                   var pname = await fetchName(req.body[keyName])["name"];
