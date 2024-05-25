@@ -22,7 +22,7 @@ function sortPlayerData(myDict){
     const row = table.insertRow();
     data[i].forEach((cell, index) => {
       const cellElement = row.insertCell();
-      if (index === 1) {
+      if ((index === 1) && (cell !== '–')) {
         var span = document.createElement("span");
         span.textContent = cell;
         span.classList.add("clickable");
@@ -46,11 +46,11 @@ function getPlayerData(playerData, PDATA){
   for (const key in PDATA) {
     const items = PDATA[key].filter(item => playerData.slice(1).includes(item));
     if (items.length > 0) {
+      console.log(key)
       let newItems = items.map(i => idsjson[key][idsjson[key].indexOf(i) + Math.floor(idsjson[key].length/2)]);
-      result[`${plotnamesjson[key]} (${key})`] = '🞄' + newItems.join('<br>🞄');
+      result[`${key} (${getKeyByValue(plotnamesjson, key)})`] = '🞄' + newItems.join('<br>🞄');
     }
   }
-  console.log(result)
   var sortedArray = Object.entries(result)
     .map(([key, value]) => [key, key, value])
     .sort((a, b) => a[2].length - b[2].length)
@@ -141,6 +141,9 @@ fetch('data/id_converter.json')
 
 var searchbox = document.getElementById("searchbox");
 
+function getKeyByValue(object, value) {
+  return Object.keys(object).find(key => object[key] === value);
+}
 function processInput() {
   var value = searchbox.value.trim();
   document.getElementById("content-table").remove();
