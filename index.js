@@ -79,7 +79,7 @@ async function generateImage({playerName, placement, potatoesCollected, playerUU
       width, 102, "right");
 
   // Draw timestamp
-  ctx.font = '9px Minecraft'
+  ctx.font = '10px Minecraft'
   drawShadowText(ctx, getFormattedDateList()[0], 1, 120)
   drawShadowText(ctx, getFormattedDateList()[1], 1, 126)
 
