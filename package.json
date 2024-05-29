@@ -4,7 +4,11 @@
   "description": "Potato Event",
   "main": "app.js",
   "repository": "https://github.com/ARMcPro/potato-event",
-  "author": "ARMcPro",
+  "contributors": [
+    {"name": "ARMcPro", "url": "https://github.com/ARMcPro"},
+    {"name": "RedVortex", "url": "https://github.com/RedVortexDev"}
+  ]
+  ,
   "license": "MIT",
   "private": false,
   "scripts": {

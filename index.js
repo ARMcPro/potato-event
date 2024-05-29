@@ -4,6 +4,7 @@ run = ""
 
 const app = express();
 const fs = require('fs');
+const pictureMaker = require('picture-maker');
 
 const resrictedPlayers = ['0'];
 
@@ -27,17 +28,35 @@ app.get('/faq', (req, res) => {
   res.sendFile(__dirname + "/faq.html");
 });
 
-/*
-function fetchName(uuid) {
-    var xmlHttp = new XMLHttpRequest();
-    xmlHttp.open( "GET", "https://api.mojang.com/user/profile/" + uuid, false );
-    xmlHttp.send( null );
-    return JSON.parse(xmlHttp.responseText)["name"];
-}*/
+app.get('/blog', (req, res) => {
+  res.sendFile(__dirname + "/Potatolord_blog.html");
+})
+
 
 async function fetchName(uuid) {
   return await fetch(`https://api.mojang.com/user/profile/${uuid}`)
     .then((response) => response.json())
+}
+
+function getKeyPlacement(jsonObj, targetKey) {
+  const sortedKeys = Object.entries(jsonObj)
+      .map(([key, value]) => ({ key, length: value.length }))
+      .sort((a, b) => b.length - a.length || (b.key > a.key ? -1 : 1));
+
+  let rank = 1;
+  let lastLength = sortedKeys[0].length;
+
+  for (let i = 0; i < sortedKeys.length; i++) {
+      if (sortedKeys[i].length < lastLength) {
+          rank = i + 1;
+      }
+      if (sortedKeys[i].key === targetKey) {
+          return rank;
+      }
+      lastLength = sortedKeys[i].length;
+  }
+
+  return -1;
 }
 
 
@@ -113,6 +132,24 @@ app.get('/sync', async (req, res) => {
   };
 });
 
+app.get('/player', (req, resp) => {
+  const uuid = req.query['uuid'];
+  if (typeof uuid === 'string') {
+    fs.readFile(__dirname + "/data/playerdata.json", async function (err, data) {
+      const playersjson = JSON.parse(data);
+      if (uuid in playersjson) {
+        const placement = getKeyPlacement(playersjson, uuid);
+        resp.send(`${playersjson[uuid][0]} - ${placement} - ${playersjson[uuid].length - 1}`);
+      }
+      else {
+        resp.send();
+      }
+    });
+  }
+  else {
+    resp.send();
+  }
+});
 
 app.listen(8080, () => {
   console.log('Server started at ' + new Date().toUTCString());
