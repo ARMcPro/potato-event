@@ -4,7 +4,6 @@ run = ""
 
 const app = express();
 const fs = require('fs');
-const pictureMaker = require('picture-maker');
 
 const resrictedPlayers = ['0'];
 
