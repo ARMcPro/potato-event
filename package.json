@@ -14,7 +14,7 @@
       "url": "https://github.com/RedVortexDev"
     }
   ],
-  "license": "ISC",
+  "license": "GNU",
   "private": false,
   "scripts": {
     "start": "node index.js"
