@@ -15,6 +15,7 @@ const sleep = (milliseconds) => {
   return new Promise(resolve => setTimeout(resolve, milliseconds))
 };
 
+registerFont(`${__dirname}/Minecraft_Small_Caps.otf`, {family: 'Minecraft'});
 async function generateImage({playerName, placement, potatoesCollected, playerUUID}) {
   // Constants
   const width = 128;
