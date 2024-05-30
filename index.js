@@ -132,6 +132,17 @@ function getFormattedDateList() {
   return [`${day}/${month}`, `${hours}:${minutes}`];
 }
 
+function findPlayerKey(obj, str) {
+  for (let key in obj) {
+    if (obj.hasOwnProperty(key)) {
+      if (obj[key][0].toLowerCase() === str.toLowerCase()) {
+        return key;
+      }
+    }
+  }
+  return null;
+};
+
 app.use(express.static(__dirname));
 
 app.get('/', (req, res) => {
@@ -256,20 +267,34 @@ app.get('/player', (req, resp) => {
   if (typeof uuid === 'string') {
     fs.readFile(__dirname + "/data/playerdata.json", async function (err, data) {
       const playersjson = JSON.parse(data);
-      if (uuid in playersjson) {
-        const placement = getKeyPlacement(playersjson, uuid);
-        const cardImage = await generateImage({
-          playerName: playersjson[uuid][0],
-          placement: placement,
-          potatoesCollected: playersjson[uuid].length - 1,
-          playerUUID: uuid,
-        });
 
+      let keyID = '';
+      if (uuid.includes('-')) {
+        keyID = uuid;
+      } else {
+        keyID = findPlayerKey(playersjson, uuid);
+      }
+      
+      if (keyID in playersjson) {
+        const placement = getKeyPlacement(playersjson, keyID);
+        const cardImage = await generateImage({
+          playerName: playersjson[keyID][0],
+          placement: placement,
+          potatoesCollected: playersjson[keyID].length - 1,
+          playerUUID: keyID,
+        });
         resp.set('Content-Type', 'image/png');
-        resp.send(cardImage);
+      resp.send(cardImage);
       }
       else {
-        resp.send();
+        const cardImage = await generateImage({
+          playerName: '?',
+          placement: 404,
+          potatoesCollected: 404,
+          playerUUID: 'ce08a3c5-b498-403c-8eca-513179f15a10',
+        });
+        resp.set('Content-Type', 'image/png');
+      resp.send(cardImage);
       }
     });
   }
