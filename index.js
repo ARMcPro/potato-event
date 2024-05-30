@@ -191,7 +191,8 @@ app.post('/post', express.json(), (req,res) => {
           const plotName = nameConvert[plotID];
           const json = JSON.parse(data);
           if (typeof json[plotName] !== 'undefined' && typeof req.body['point'] === 'string' && typeof req.body['uuid'] === 'string' && req.body['key'] === process.env[P + plotID] && !resrictedPlayers.includes(req.body['uuid']) && typeof process.env[P + plotID] === 'string') {
-            if (json[plotName].includes(req.body['point'])) {
+            const half_length = Math.floor(json[plotName].length / 2);
+            if (json[plotName].slice(0,half_length).includes(req.body['point'])) {
               fs.readFile(__dirname + "/data/playerdata.json", async function (perr, pdata) {
                 var pjson = JSON.parse(pdata);
                 if (typeof pjson[req.body['uuid']] === 'undefined')  {

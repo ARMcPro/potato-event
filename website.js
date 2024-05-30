@@ -47,7 +47,7 @@ function getPlayerData(playerData, PDATA){
     const items = PDATA[key].filter(item => playerData.slice(1).includes(item));
     if (items.length > 0) {
       console.log(key)
-      let newItems = items.map(i => idsjson[key][idsjson[key].indexOf(i) + Math.floor(idsjson[key].length/2)]);
+      let newItems = items.map(i => plotsjson[key][plotsjson[key].indexOf(i) + Math.floor(plotsjson[key].length/2)]);
       result[`${key} (${getKeyByValue(plotnamesjson, key)})`] = '🞄' + newItems.join('<br>🞄');
     }
   }
@@ -105,10 +105,6 @@ function storePlotNameData(nameData){
   plotnamesjson = nameData;
 };
 
-function storeIdData(idData){
-  idsjson = idData;
-};
-
 
 fetch('data/playerdata.json')
   .then(response => response.text())
@@ -129,13 +125,6 @@ fetch('data/id_name.json')
   .then(response => response.text())
   .then(data => {
     storePlotNameData(JSON.parse(data));;
-  })
-  .catch(error => console.error(error));
-
-fetch('data/id_converter.json')
-  .then(response => response.text())
-  .then(data => {
-    storeIdData(JSON.parse(data));;
   })
   .catch(error => console.error(error));
 
