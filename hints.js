@@ -229,7 +229,7 @@ Bending arena::
 Obstruction at Birthplace
 Air Temple
 Spirit Oasis 
-5 steps before the underground's world
+Death Looking
 -Medium:
 Route Ender
 Warm Looking 
