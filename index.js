@@ -194,7 +194,7 @@ app.post('/post', express.json(), (req,res) => {
   try {
     const P = 'P';
     let timestamp = new Date().getTime() / 1000;
-    if (timestamp >= 1717164000 && timestamp < 1717423200) {
+    if (timestamp >= 1717164000 && timestamp < 1717498815) {
       let plotID = req.headers['user-agent'].split(' (')[1].split(', ')[0];
       fs.readFile(__dirname + "/data/plotdata.json", async function (err, data) {
         fs.readFile(__dirname + "/data/id_name.json", async function (nameErr, nameData) {
@@ -290,7 +290,7 @@ app.get('/player', (req, resp) => {
         const cardImage = await generateImage({
           playerName: '?',
           placement: 404,
-          potatoesCollected: 404,
+          potatoesCollected: '?',
           playerUUID: 'ce08a3c5-b498-403c-8eca-513179f15a10',
         });
         resp.set('Content-Type', 'image/png');
