@@ -194,7 +194,7 @@ app.post('/post', express.json(), (req,res) => {
   try {
     const P = 'P';
     let timestamp = new Date().getTime() / 1000;
-    if (timestamp >= 1717164000 && timestamp < 9987161601) {
+    if (timestamp >= 1717164000 && timestamp < 1717423200) {
       let plotID = req.headers['user-agent'].split(' (')[1].split(', ')[0];
       fs.readFile(__dirname + "/data/plotdata.json", async function (err, data) {
         fs.readFile(__dirname + "/data/id_name.json", async function (nameErr, nameData) {
@@ -207,7 +207,7 @@ app.post('/post', express.json(), (req,res) => {
               fs.readFile(__dirname + "/data/playerdata.json", async function (perr, pdata) {
                 var pjson = JSON.parse(pdata);
                 if (typeof pjson[req.body['uuid']] === 'undefined')  {
-                  console.log("new");
+                  console.log("New Player");
                   var pname = await fetchName(req.body['uuid']);
                   pname = pname["name"];
                   if (typeof pname !== 'undefined') {
@@ -217,7 +217,7 @@ app.post('/post', express.json(), (req,res) => {
                   };
                 }
                 else if (!pjson[req.body['uuid']].includes(req.body['point'])) {
-                  console.log("old");
+                  console.log("Old Player");
                   var keyName = req.body['uuid'];
                   var pname = await fetchName(req.body[keyName])["name"];
                   pjson[keyName].push(req.body['point']);
@@ -252,7 +252,7 @@ app.get('/sync', async (req, res) => {
         let newName = await fetchName(key);
         if (typeof newName["name"] === 'string'){
           pjson[key][0] = newName["name"];
-          await sleep(250);
+          await sleep(500);
         };
       };
       fs.writeFileSync(__dirname + "/data/playerdata.json", JSON.stringify(pjson));
