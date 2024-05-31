@@ -194,19 +194,19 @@ Against All Odds
 
 Battle Box::
 -Easy:
-Winner
-Vote
-Well-versed Combatant
-Builder
+You're Winner!
+Relentless Voter!
+Murderous Intent.
+I'm Leafing!
 -Medium:
-World Champion
-Flawless
-Top Sneaky
--Hard:
-Ace
-Literally Find The Potatoes
--Super Hard:
+World Champion!
 Undying Squadron
+Stealth 100.
+-Hard:
+Ace Fighter.
+The True Potatoes...
+-Super Hard:
+The Blade's Heir...
 
 Deep Echo::
 -Easy:
