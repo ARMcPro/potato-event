@@ -46,7 +46,6 @@ function getPlayerData(playerData, PDATA){
   for (const key in PDATA) {
     const items = PDATA[key].filter(item => playerData.slice(1).includes(item));
     if (items.length > 0) {
-      console.log(key)
       let newItems = Array.from(new Set(items.map(i => plotsjson[key][(plotsjson[key].indexOf(i) + Math.floor(plotsjson[key].length / 2)) % plotsjson[key].length])));
       result[`${key} (${getKeyByValue(plotnamesjson, key)})`] = '🞄' + newItems.join('<br>🞄');
     }
@@ -54,7 +53,8 @@ function getPlayerData(playerData, PDATA){
   var sortedArray = Object.entries(result)
     .map(([key, value]) => [key, key, value])
     .sort((a, b) => a[2].length - b[2].length)
-    .map(([_, firstValue, lengthMinusOne], index) => [index + 1, firstValue, lengthMinusOne]);
+    .map(([_, firstValue, value], index) => [index + 1, firstValue, value.length - 1]);
+    
   var data = sortedArray;
   data.unshift(['#','Plot','Potatoes']);
   const table = document.createElement('table');
